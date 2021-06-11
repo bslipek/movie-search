@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { App } from "./App";
 import reportWebVitals from './reportWebVitals';
+import { SWRConfigProvider } from './providers/SWRConfigProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SWRConfigProvider>
+      <App />
+    </SWRConfigProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
