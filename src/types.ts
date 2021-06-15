@@ -5,3 +5,5 @@ export type Movie = {
   Year: string;
   imdbID: string;
 };
+
+export const isString = (e: string | any): e is string => typeof e === "string";

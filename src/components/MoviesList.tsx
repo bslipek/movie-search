@@ -32,7 +32,7 @@ const MovieListItem = ({ Title, Poster, Year }: Movie) => {
 
 export const MoviesList = ({ data }: Props) => {
   return (
-    <div className="flex flex-wrap -mx-1 mt-9 lg:-mx-4">
+    <div className="flex flex-wrap -mx-1 mt-9 lg:-mx-4 sm:p-2">
       {data.map((movie) => (
         <MovieListItem {...movie} />
       ))}
