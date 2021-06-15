@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useEffect } from "react";
 import { useDebounce, useInput } from "../hooks";
 
@@ -27,11 +28,20 @@ export const SearchInput = ({ className, onChange, initialValue = {} }: Props) =
     onChange({ s: debouncedS, y: debouncedY });
   }, [debouncedS, debouncedY, onChange]);
 
-  const isS = s !== "";
+  const reset = useCallback(() => {
+    onSChange("");
+    onYChange("");
+  }, [onSChange, onYChange])
+
+  const isS = debouncedS !== "";
 
   return (
     <div className="relative flex justify-center p-3 pr-12 text-center bg-white rounded-md">
-      {isS && <XIcon onClick={() => onSChange("")} />}
+      {isS && (
+        <XIcon
+          onClick={reset}
+        />
+      )}
       <div className="flex flex-1">
         {isS && (
           <label htmlFor="s" className="text-gray-400">
