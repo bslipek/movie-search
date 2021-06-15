@@ -45,7 +45,9 @@ export const SearchView = () => {
           <SearchInput {...{ onChange: setQueryT, initialValue: queryT }} />
           {isLoading && <Info>Loading...</Info>}
           {data?.Response === "False" && queryT && <Info>Not found</Info>}
-          {data?.Response === "True" && <Info>Total: {data.totalResults}</Info>}
+          {data?.Response === "True" && (
+            <Info>Total found: {data.totalResults}</Info>
+          )}
         </div>
       </div>
 

@@ -12,13 +12,17 @@ const MovieListItem = ({ Title, Poster, Year }: Movie) => {
           className="block w-full overflow-hidden"
           style={{ height: "250px" }}
         >
-          {Poster !== "N/A" && (
+          {Poster !== "N/A" ? (
             <img
               src={Poster}
               alt={Title}
               className="block w-full h-auto"
               height="250"
             />
+          ) : 
+            (
+            <div className="flex items-center justify-center w-full h-full bg-purple-400"> <span className="text-purple-200">No poster found</span></div>
+        
           )}
         </div>
         <div className="py-2 text-center bg-white">
