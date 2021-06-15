@@ -7,11 +7,12 @@ type Query = {
   y?: string;
 };
 
-export async function fetcher(query: Query = {}, path: string = "") {
-  let url = new URL(`http://www.omdbapi.com/${path}`);
-  url.search = new URLSearchParams(query).toString();
+export async function fetcher(path: string = "") {
+  let url = `http://www.omdbapi.com/${path}`;
+  url += url.includes("?") ? "&" : "?";
+  url += "apikey=12a9e3ee";
 
-  const res = await fetch(url.toString());
+  const res = await fetch(url);
 
   if (!res.ok) throw res;
 
