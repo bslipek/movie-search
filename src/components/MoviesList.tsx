@@ -4,7 +4,7 @@ type Props = {
   data: Array<Movie>;
 };
 
-const MovieListItem = ({ Title, Poster, Year }: Movie) => {
+const MovieListItem = ({ Title, Poster, Year, Type }: Movie) => {
   return (
     <div className="w-full px-1 my-1 md:w-1/3 lg:my-4 lg:px-4">
       <div className="overflow-hidden border rounded-lg shadow-lg">
@@ -26,8 +26,10 @@ const MovieListItem = ({ Title, Poster, Year }: Movie) => {
           )}
         </div>
         <div className="py-2 text-center bg-white">
-          <div className="font-semibold">{Title}</div>
-          <div className="font-thin">{Year}</div>
+          <div className="font-semibold">
+            {Title}
+          </div>
+          <div className="font-thin">{Type !== 'movie' && Type} {Year}</div>
         </div>
       </div>
     </div>
@@ -38,7 +40,7 @@ export const MoviesList = ({ data }: Props) => {
   return (
     <div className="flex flex-wrap -mx-1 mt-9 lg:-mx-4 sm:p-2">
       {data.map((movie) => (
-        <MovieListItem {...movie} />
+        <MovieListItem key={movie.imdbID} {...movie} />
       ))}
     </div>
   );

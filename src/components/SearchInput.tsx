@@ -12,32 +12,56 @@ const XIcon = ({ onClick }: { onClick: () => void }) => (
 
 type Props = {
   className?: string;
-  onChange?: (value: string) => void;
-  initialValue?: string;
+  initialValue: Record<string, string>;
+  onChange: (data: Record<string, string>) => void;
 };
 
-export const SearchInput = ({
-  className,
-  onChange: _onChange = () => {},
-  initialValue = "",
-}: Props) => {
-  const { value, onChange } = useInput(initialValue);
-  const debouncedValue = useDebounce(value);
+export const SearchInput = ({ className, onChange, initialValue = {} }: Props) => {
+  const { value: s, onChange: onSChange } = useInput(initialValue.s || "");
+  const debouncedS = useDebounce(s);
+
+  const { value: y, onChange: onYChange } = useInput(initialValue.y || "");
+  const debouncedY = useDebounce(y);
 
   useEffect(() => {
-    _onChange(debouncedValue);
-  }, [debouncedValue, _onChange]);
+    onChange({ s: debouncedS, y: debouncedY });
+  }, [debouncedS, debouncedY, onChange]);
+
+  const isS = s !== "";
 
   return (
-    <div className="relative py-3 text-center bg-white rounded-md">
-      {value !== "" && <XIcon onClick={() => onChange('')}    />}
-      <input
-        type="text"
-        className={`w-full px-10 text-xl  outline-none border-0 text-gray-700 text-center ${className}`}
-        placeholder="Search by movie title..."
-        autoFocus
-        {...{ value, onChange }}
-      ></input>
+    <div className="relative flex justify-center p-3 pr-12 text-center bg-white rounded-md">
+      {isS && <XIcon onClick={() => onSChange("")} />}
+      <div className="flex flex-1">
+        {isS && (
+          <label htmlFor="s" className="text-gray-400">
+            Title:
+          </label>
+        )}
+        <input
+          type="text"
+          name="s"
+          className={`mr-2 w-full text-xl outline-none border-0 text-gray-700 text-center ${className} ${
+            isS && "border-b"
+          }`}
+          placeholder="Search by title..."
+          autoFocus
+          {...{ value: s, onChange: onSChange }}
+        ></input>
+      </div>
+      {isS && (
+        <div>
+          <label htmlFor="y" className="text-gray-400">
+            Year:
+          </label>
+          <input
+            type="text"
+            name="y"
+            className={` mr-2 border-b  text-lg top-0  outline-none w-30  text-gray-700 text-center ${className}`}
+            {...{ value: y, onChange: onYChange }}
+          ></input>
+        </div>
+      )}
     </div>
   );
 };
