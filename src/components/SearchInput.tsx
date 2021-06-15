@@ -22,7 +22,7 @@ export const SearchInput = ({
   return (
     <input
       type="text"
-      className={`w-full p-3 text-xl bg-white border rounded-md outline-none ${className}`}
+      className={`w-full p-3 text-xl bg-white rounded-md outline-none border-0 text-gray-700 text-center ${className}`}
       placeholder="Search by movie title..."
       autoFocus
       {...{ value, onChange }}
