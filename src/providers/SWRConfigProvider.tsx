@@ -1,12 +1,5 @@
 import { SWRConfig } from "swr";
 
-type Query = {
-  /**	Movie title to search for. */
-  s?: string;
-  /** Year of release. */
-  y?: string;
-};
-
 export async function fetcher(path: string = "") {
   let url = `http://www.omdbapi.com/${path}`;
   url += url.includes("?") ? "&" : "?";
