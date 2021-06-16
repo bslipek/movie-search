@@ -1,18 +1,14 @@
 import { motion } from "framer-motion";
-import { forwardRef } from "react";
 import { createPortal } from "react-dom";
 import { Movie } from "../types";
 
 type Props = Movie & {
   close: () => void;
-  ref: React.RefObject<any>;
 };
 
-export const MoviePreview = motion(
-  forwardRef(({ Poster, Title, Year, Type, imdbID, close, ref }: Props) => {
+export const MoviePreview = ({ Poster, Title, Year, Type, imdbID, close}: Props) => {
     return createPortal(
       <motion.div
-        ref={ref}
         className="fixed top-0 bottom-0 left-0 right-0 flex items-center bg-purple-900 bg-opacity-80 backdrop-filter backdrop-blur"
         onClick={close}
         initial={{ opacity: 0 }}
@@ -53,5 +49,4 @@ export const MoviePreview = motion(
       </motion.div>,
       document.querySelector("#modal-root") as Element
     );
-  })
-);
+  }

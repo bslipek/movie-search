@@ -1,6 +1,5 @@
 import { AnimateSharedLayout, motion } from "framer-motion";
 import React from "react";
-import { forwardRef } from "react";
 import { useCallback } from "react";
 import useSWR from "swr";
 import { fadeDown } from "../animation";
@@ -22,23 +21,19 @@ type ErrorResponse = {
 
 type Response = SuccessResponse | ErrorResponse;
 
-const MotionInfo = motion(
-  forwardRef(
+const MotionInfo = 
     ({
       children,
-      ref,
     }: {
       children: React.ReactNode;
-      ref: React.RefObject<any>;
     }) => (
       <motion.div
         layout
-        key="xIcon"
+        key="info"
         initial="hidden"
         animate="visible"
         exit="hidden"
         variants={fadeDown}
-        ref={ref}
         className="absolute inset-x-0"
       >
         <div className="relative inline-block h-8 px-3 py-2 -m-4 bg-white bg-opacity-50 shadow-lg rounded-b-md top-7">
@@ -48,8 +43,6 @@ const MotionInfo = motion(
         </div>
       </motion.div>
     )
-  )
-);
 
 export const SearchView = () => {
   const [queryS, setQueryS] = useQueryParam("s", "");
