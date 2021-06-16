@@ -3,6 +3,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
+    cursor: {
+      pointer: "pointer",
+      "zoom-in": "zoom-in",
+    },
   },
   variants: {
     extend: {},

@@ -35,7 +35,7 @@ export const SearchInput = ({
   return (
     <motion.div
       layout
-      className="relative flex justify-center p-3 pr-12 text-center bg-white rounded-md"
+      className="relative flex flex-col justify-center p-3 pr-12 text-center bg-white rounded-md md:flex-row"
     >
       <AnimatePresence>
         {isS && (
