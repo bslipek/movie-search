@@ -1,15 +1,8 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback } from "react";
 import { useEffect } from "react";
+import { fadeDown, fadeLeft, fadeRight } from "../animation";
 import { useDebounce, useInput } from "../hooks";
-
-const XIcon = ({ onClick }: { onClick: () => void }) => (
-  <div
-    onClick={onClick}
-    className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 border rounded-full right-5 top-2.5 text-gray-400 hover:font-bold hover:text-red-500 hover:border-red-500 hover:font-bold cursor-pointer"
-  >
-    X
-  </div>
-);
 
 type Props = {
   className?: string;
@@ -17,7 +10,11 @@ type Props = {
   onChange: (data: Record<string, string>) => void;
 };
 
-export const SearchInput = ({ className, onChange, initialValue = {} }: Props) => {
+export const SearchInput = ({
+  className,
+  onChange,
+  initialValue = {},
+}: Props) => {
   const { value: s, onChange: onSChange } = useInput(initialValue.s || "");
   const debouncedS = useDebounce(s);
 
@@ -31,47 +28,78 @@ export const SearchInput = ({ className, onChange, initialValue = {} }: Props) =
   const reset = useCallback(() => {
     onSChange("");
     onYChange("");
-  }, [onSChange, onYChange])
+  }, [onSChange, onYChange]);
 
   const isS = debouncedS !== "";
 
   return (
-    <div className="relative flex justify-center p-3 pr-12 text-center bg-white rounded-md">
-      {isS && (
-        <XIcon
-          onClick={reset}
-        />
-      )}
-      <div className="flex flex-1">
+    <motion.div
+      layout
+      className="relative flex justify-center p-3 pr-12 text-center bg-white rounded-md"
+    >
+      <AnimatePresence>
         {isS && (
-          <label htmlFor="s" className="text-gray-400">
-            Title:
-          </label>
+          <motion.div
+            key="xIcon"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={fadeLeft}
+            onClick={reset}
+            className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 border rounded-full right-5 top-2.5 text-gray-400 hover:font-bold hover:text-red-500 hover:border-red-500 hover:font-bold cursor-pointer"
+          >
+            X
+          </motion.div>
         )}
-        <input
-          type="text"
-          name="s"
-          className={`mr-2 w-full text-xl outline-none border-0 text-gray-700 text-center ${className} ${
-            isS && "border-b"
-          }`}
-          placeholder="Search by title..."
-          autoFocus
-          {...{ value: s, onChange: onSChange }}
-        ></input>
-      </div>
-      {isS && (
-        <div>
-          <label htmlFor="y" className="text-gray-400">
-            Year:
-          </label>
-          <input
+        <div className="flex flex-1">
+          {isS && (
+            <motion.label
+              key="sLabel"
+              htmlFor="s"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={fadeRight}
+              className="text-gray-400"
+            >
+              Title:
+            </motion.label>
+          )}
+          <motion.input
+            layout
+            transition={{ type: "spring", bounce: 0 }}
             type="text"
-            name="y"
-            className={` mr-2 border-b  text-lg top-0  outline-none w-30  text-gray-700 text-center ${className}`}
-            {...{ value: y, onChange: onYChange }}
-          ></input>
+            name="s"
+            className={`mr-2 w-full text-xl outline-none border-0 text-gray-700 text-center ${className} ${
+              isS && "border-b"
+            }`}
+            placeholder="Search by title..."
+            autoFocus
+            autoComplete="off"
+            {...{ value: s, onChange: onSChange }}
+          ></motion.input>
         </div>
-      )}
-    </div>
+        {isS && (
+          <motion.div
+            key="yearField"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={fadeDown}
+          >
+            <label htmlFor="y" className="text-gray-400">
+              Year:
+            </label>
+            <input
+              type="text"
+              name="y"
+              className={` mr-2 border-b  text-lg top-0  outline-none w-30  text-gray-700 text-center ${className}`}
+              {...{ value: y, onChange: onYChange }}
+              autoComplete="off"
+            ></input>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };

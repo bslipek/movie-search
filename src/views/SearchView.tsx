@@ -1,6 +1,9 @@
+import { AnimateSharedLayout, motion } from "framer-motion";
 import React from "react";
+import { forwardRef } from "react";
 import { useCallback } from "react";
 import useSWR from "swr";
+import { fadeDown } from "../animation";
 import { CenteredLayout, MoviesList, SearchInput } from "../components";
 import { useQueryParam } from "../hooks";
 import { Movie } from "../types";
@@ -14,18 +17,38 @@ type SuccessResponse = {
 type ErrorResponse = {
   Response: "False";
   Error: string;
+  Search: [];
 };
 
 type Response = SuccessResponse | ErrorResponse;
 
-const Info = ({ children }: { children: React.ReactNode }) => (
-  <div className="absolute inset-x-0">
-    <div className="relative inline-block h-8 px-3 py-2 -m-4 bg-white bg-opacity-50 shadow-lg rounded-b-md top-7">
-      <div className="relative inline-block px-5 py-2 text-gray-600 bg-white -top-7 rounded-b-md">
-        {children}
-      </div>
-    </div>
-  </div>
+const MotionInfo = motion(
+  forwardRef(
+    ({
+      children,
+      ref,
+    }: {
+      children: React.ReactNode;
+      ref: React.RefObject<any>;
+    }) => (
+      <motion.div
+        layout
+        key="xIcon"
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={fadeDown}
+        ref={ref}
+        className="absolute inset-x-0"
+      >
+        <div className="relative inline-block h-8 px-3 py-2 -m-4 bg-white bg-opacity-50 shadow-lg rounded-b-md top-7">
+          <div className="relative inline-block px-5 py-2 text-gray-600 bg-white -top-7 rounded-b-md">
+            {children}
+          </div>
+        </div>
+      </motion.div>
+    )
+  )
 );
 
 export const SearchView = () => {
@@ -45,27 +68,35 @@ export const SearchView = () => {
 
   return (
     <CenteredLayout>
-      <div
-        className="sticky flex items-end justify-center w-full"
-        style={{
-          paddingTop: "40vh",
-          top: "-40.5vh",
-          backdropFilter: "blur(5px)",
-        }}
-      >
-        <div className="relative flex-1 p-3 text-center bg-white bg-opacity-50 rounded-md shadow-lg backdrop-blur-md">
-          <SearchInput
-            {...{ initialValue: { s: queryS, y: queryY }, onChange }}
-          />
-          {isLoading && <Info>Loading...</Info>}
-          {data?.Response === "False" && queryS && <Info>{data.Error}</Info>}
-          {data?.Response === "True" && (
-            <Info>Total found: {data.totalResults}</Info>
-          )}
+      <AnimateSharedLayout>
+        <div
+          className="sticky z-10 flex items-end justify-center w-full"
+          style={{
+            paddingTop: "40vh",
+            top: "-40.5vh",
+            backdropFilter: "blur(5px)",
+          }}
+        >
+          <motion.div
+            layout
+            className="relative flex-1 p-3 text-center bg-white bg-opacity-50 rounded-md shadow-lg backdrop-blur-md"
+          >
+            <SearchInput
+              {...{ initialValue: { s: queryS, y: queryY }, onChange }}
+            />
+            {queryS && (
+              <MotionInfo>
+                {isLoading && "Loading..."}
+                {data?.Response === "False" && queryS && data.Error}
+                {data?.Response === "True" &&
+                  `Total found: ${data.totalResults}`}
+              </MotionInfo>
+            )}
+          </motion.div>
         </div>
-      </div>
 
-      {data?.Response === "True" && <MoviesList {...{ data: data.Search }} />}
+        <MoviesList {...{ data: data?.Search }} />
+      </AnimateSharedLayout>
     </CenteredLayout>
   );
 };
