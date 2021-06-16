@@ -70,16 +70,16 @@ export const SearchView = () => {
     <CenteredLayout>
       <AnimateSharedLayout>
         <div
-          className="sticky z-10 flex items-end justify-center w-full"
+          className="sticky z-10 flex items-end justify-center w-full pointer-events-none"
           style={{
             paddingTop: "40vh",
             top: "-40.5vh",
-            backdropFilter: "blur(5px)",
           }}
         >
           <motion.div
             layout
-            className="relative flex-1 p-3 text-center bg-white bg-opacity-50 rounded-md shadow-lg backdrop-blur-md"
+            className="relative flex-1 p-3 text-center bg-white bg-opacity-50 rounded-md shadow-lg pointer-events-auto backdrop-blur-md"
+            style={{  backdropFilter: "blur(5px)"  }}
           >
             <SearchInput
               {...{ initialValue: { s: queryS, y: queryY }, onChange }}

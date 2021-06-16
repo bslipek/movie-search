@@ -44,6 +44,7 @@ export const SearchInput = ({
             initial="hidden"
             animate="visible"
             exit="hidden"
+            whileHover={{ scale: 1.2, rotate: -20 }}
             variants={fadeLeft}
             onClick={reset}
             className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 border rounded-full right-5 top-2.5 text-gray-400 hover:font-bold hover:text-red-500 hover:border-red-500 hover:font-bold cursor-pointer"
