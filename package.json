@@ -52,5 +52,11 @@
   },
   "jest": {
     "resetMocks": false
+  },
+  "reactSnap": {
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ]
   }
 }
