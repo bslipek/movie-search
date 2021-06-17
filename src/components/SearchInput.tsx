@@ -38,20 +38,6 @@ export const SearchInput = ({
       className="relative flex flex-col justify-center p-3 pr-12 text-center bg-white rounded-md md:flex-row"
     >
       <AnimatePresence>
-        {isS && (
-          <motion.div
-            key="xIcon"
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            whileHover={{ scale: 1.2, rotate: -20 }}
-            variants={fadeLeft}
-            onClick={reset}
-            className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 border rounded-full right-5 top-2.5 text-gray-400 hover:font-bold hover:text-red-500 hover:border-red-500 hover:font-bold cursor-pointer"
-          >
-            X
-          </motion.div>
-        )}
         <div className="flex flex-1">
           {isS && (
             <motion.label
@@ -81,24 +67,38 @@ export const SearchInput = ({
           ></motion.input>
         </div>
         {isS && (
-          <motion.div
-            key="yearField"
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={fadeDown}
-          >
-            <label htmlFor="y" className="text-gray-400">
-              Year:
-            </label>
-            <input
-              type="text"
-              name="y"
-              className={` mr-2 border-b  text-lg top-0  outline-none w-30  text-gray-700 text-center ${className}`}
-              {...{ value: y, onChange: onYChange }}
-              autoComplete="off"
-            ></input>
-          </motion.div>
+          <>
+            <motion.div
+              key="yearField"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={fadeDown}
+            >
+              <label htmlFor="y" className="text-gray-400">
+                Year:
+              </label>
+              <input
+                type="text"
+                name="y"
+                className={` mr-2 border-b  text-lg top-0  outline-none w-30  text-gray-700 text-center ${className}`}
+                {...{ value: y, onChange: onYChange }}
+                autoComplete="off"
+              ></input>
+            </motion.div>
+            <motion.div
+              key="xIcon"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              whileHover={{ scale: 1.2, rotate: -20 }}
+              variants={fadeLeft}
+              onClick={reset}
+              className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 border rounded-full right-5 top-2.5 text-gray-400 hover:font-bold hover:text-red-500 hover:border-red-500 hover:font-bold cursor-pointer"
+            >
+              X
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.div>
