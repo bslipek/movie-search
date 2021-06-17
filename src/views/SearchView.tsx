@@ -28,8 +28,8 @@ const MotionInfo =
       children: React.ReactNode;
     }) => (
       <motion.div
-        layout
         key="info"
+        layout
         initial="hidden"
         animate="visible"
         exit="hidden"
@@ -70,9 +70,9 @@ export const SearchView = () => {
           }}
         >
           <motion.div
+            key="searchInputContainer"
             layout
-            className="relative flex-1 p-3 text-center bg-white bg-opacity-50 rounded-md shadow-lg pointer-events-auto backdrop-blur-md"
-            style={{  backdropFilter: "blur(5px)"  }}
+            className="relative flex-1 p-3 text-center bg-white bg-opacity-50 rounded-md shadow-lg pointer-events-auto backdrop-filter backdrop-blur-md"
           >
             <SearchInput
               {...{ initialValue: { s: queryS, y: queryY }, onChange }}

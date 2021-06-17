@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback } from "react";
+import { Fragment, useCallback } from "react";
 import { useEffect } from "react";
 import { fadeDown, fadeLeft, fadeRight } from "../animation";
 import { useDebounce, useInput } from "../hooks";
@@ -34,11 +34,12 @@ export const SearchInput = ({
 
   return (
     <motion.div
+      key="searchInput"
       layout
       className="relative flex flex-col justify-center p-3 pr-12 text-center bg-white rounded-md md:flex-row"
     >
       <AnimatePresence>
-        <div className="flex flex-1">
+        <motion.div key="titleFieldContainer" className="flex flex-1">
           {isS && (
             <motion.label
               key="sLabel"
@@ -53,6 +54,7 @@ export const SearchInput = ({
             </motion.label>
           )}
           <motion.input
+            key="titleField"
             layout
             transition={{ type: "spring", bounce: 0 }}
             type="text"
@@ -65,9 +67,9 @@ export const SearchInput = ({
             autoComplete="off"
             {...{ value: s, onChange: onSChange }}
           ></motion.input>
-        </div>
+        </motion.div>
         {isS && (
-          <>
+          <Fragment key="yearFieldContainer">
             <motion.div
               key="yearField"
               initial="hidden"
@@ -98,7 +100,7 @@ export const SearchInput = ({
             >
               X
             </motion.div>
-          </>
+          </Fragment>
         )}
       </AnimatePresence>
     </motion.div>
