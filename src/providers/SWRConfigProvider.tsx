@@ -3,7 +3,7 @@ import { SWRConfig } from "swr";
 export async function fetcher(path: string = "") {
   let url = `http://www.omdbapi.com/${path}`;
   url += url.includes("?") ? "&" : "?";
-  url += "apikey=12a9e3ee";
+  url += `&apikey=${process.env.REACT_APP_API_KEY}`;
 
   const res = await fetch(url);
 
